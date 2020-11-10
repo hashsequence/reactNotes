@@ -1,1 +1,1 @@
-Concurrency : [React Notes](notes/README.md)
+[React Notes](notes/README.md)
