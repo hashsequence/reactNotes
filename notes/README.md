@@ -186,310 +186,127 @@ const doubNumArray = numbers.map((num) => {
 
 * filter, reduce, findIndex, concat, slice, splice are some other ones
 
-# Basic Features
+# Section 3: React Basics & Working With Components
 
-## create react app
+## 25. What Are Components? And Why Is React All About Them?
 
-```sh
-$ create-react-app <name of proj>
-$ cd <name of proj> 
-$ npm start
+* all user interfaces are made of components
+
+* what are components?
+    * components are combination is a combination of css, html, and javascript
+
+* why components?
+    * reusability 
+    * seperation of concerns
+    * done repeat yourself
+    * dont do too many things in one and the same place (function)
+
+## 26. React Code Is Written In A "Declarative Way"!
+
+* React uses a declarative approach meaning with that we define the desired target states
+and let react figure out the actual javascript DOM instructions
+
+## 27. Creating a new React Project
+
+* we need to download node for npm and npx: https://nodejs.org/en/
+
+*creating react skeleton app
+```js
+npx create-react-app my-app
+cd my-app
+npm start
 ```
 
-## folder structure
-
-in the project folder we have package.json
-
-```json
-{
-  "name": "react-complete-guide",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-scripts": "1.1.5"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
-  }
-
-
+* this installs the node modules
+```js
+npm install
 ```
 
-node modules folder has all the dependencies and subdependencies 
-and is generated automatically via nmp install in your project folder
+## 29. Analyzing a Standard React Project
 
-
-we also get a index.html in the public folder which gives us the defualy index
-html page
-
-
-in the src folder there is the index.js and the app.js, which has the default react component
-
-
-## react component basics
-
-app.js
-
-```jsx
-import React, { component } from 'react'
-import './App.css';
-class App extends Component {
-    render() {
-        (
-        <div className="App">
-            <h1> Hi! </h1>
-        </div>
-        );
-    }
-}
-
-export default App
-```
-
-index.js
-
-```jsx
-
-ReactDOM.render(<App />, document.getElementById('root'));
-
-```
-all components must have render to render html
-
-
-## understanding jsx
-
-jsx is syntatic sugar for js when using the React library
-
-we can use react.CreateElement for pure js to create the html instead of Render
-
-app.js
-
-```jsx
-import React, { component } from 'react'
-import './App.css';
-class App extends Component {
-    return React.CreateElement('div',{className: 'App'}, React.createElement('h1', null,'Hi!'));
-}
-
-```
-
-but obviously jsx looks better and is more easibly readable than pure js 
-
-
-## JSX restriction
-
-* jsx expression must have one root element
-* we cant use the term class in html in jsx because class is 
-already a reserved in js
-
-
-## Creating a Functional Component 
-
-*simplest form: a component returns html
-
-Person.js
-```jsx
-
-function person {
-    return <h2>
-}
-
-//es6
-
-const person = () => {
-    return <p> Im a person </p>
-}
-
-
-export default person
-
-```
-
-in App.js
-
-```jsx
-import Person from './Person' //make sure to use capital to not intefere with native keywords in jsx
-
-
-class App extends Component {
-     render() {
-        (
-        <div className="App">
-            <Person/>
-        </div>
-        );
-     }
-}
-
-```
-
-When creating components there is two different ways:
-
-* functional components 
-
-we have a function like 
-
-```jsx
-
-const cmp = () => {return <div> whatever </div> }
-```
-
-* class based component 
-
-```jsx
-
-class cmp extends Component {
-    render <div> whatever </div>
-}
-```
-
-## Outputting Dynamic Components
-
-want to put some js into the rendered html
-
+* index.js:
 ```jsx
 import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
 
-const person = () => {
-    return <p> Yo, I'm {Math.floor(Math.random())} years old! </p>
-};
-```
-
-## Working With Props
-
-now how do we make our Components take parameters?
-
-
-```jsx
-
-import React from 'react';
-
-const person = (props) => {
-    //theoretically we dont need to call the paramters props, but makes it readable 
-    return <p> Yo, I'm {props.name} and {props.years} years old! </p>
-};
-
-export default person;
-```
-
-how do we call it:
-
-
-Person.js
-```jsx
-import Person from './Person
-    <Person name="Max" age="26"> whatever text </Person>
-```
-
-
-## Understanding the "Children" Prop
-
-Person.js
-
-```jsx
-
-import React from 'react';
-
-const person = (props) => {
-    //theoretically we dont need to call the paramters props, but makes it readable 
-    return (
-        <p> Yo, I'm {props.name} and {props.years} years old! </p>
-        <p> {props.children} </p> //children is a reserved word in jsx
-    )
-};
-
-export default person;
-```
-
-App.js
-
-```jsx
-<Person name = "Max" age="26"> Put Children here, could be another component can be html or straight up text </Person>
+//render element takes in too arguments
+//second argument is the default javascript api 
+//the first argument is a html tag
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+);
 
 ```
+* the render will render the App / in place of the root
+```html
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+```
 
-## Understanding State
-
-
-* state : can only be done in component class and is a keyword in react
+* App.js:
 
 ```jsx
-class App extends Component {
-    state = {
-            persons: [
-                {name: 'Max', age: 28},
-                {name: 'Step', age: 26}
-            ]
+import ExpenseItem from './components/ExpenseItem';
 
-        }
-        //should be used consertively 
-
-    render() {
-        (
-            <Person name={this.state.persons[0].name} age={this.state.persons[0].age}> whatever </Person>
-        )
-    }
+function App() {
+  return (
+    <div>
+      <h2>Let's get started!</h2>
+      <ExpenseItem></ExpenseItem>
+    </div>
+  );
 }
+
+export default App;
+
 ```
 
-states can be changed, and if it changes it would make react re-render your dom
+## 30. Introducing JSX
 
-## props and states
-
-props allows a parent component to pass to a child component
-
-
-state is used to hange the component from within, and changes
-to state triggers ui update
-
-
+* App.js:
+    * basic App component 
 ```jsx
-//... in class component
-switchNameHandler = () => {
-    console.log("button was clicked")
+
+function App() {
+  return (
+    <div>
+      <h2>Let's get started!</h2>
+    </div>
+  );
 }
-render() {
-    <button onClick={}>Switch Name</button>
-}
+
+export default App;
+
 ```
+## 31. Introducing JSX
 
-there are also other event names besides onClick:
-
-onChange, onInput, onInvalid, onSubmit
-
-## manipulating state
-
+* App.js
+    * will add another tag and it will show up
 ```jsx
-//... in class component
-state = {
-            persons: [
-                {name: 'Max', age: 28},
-                {name: 'Step', age: 26}
-            ]
 
-        }
-        
-switchNameHandler = () => {
-        //DONT DO THIS: this.state.persons[0].name = 'Maxy';
-        this.setState({persons: 
-                {name: 'Max', age: 235},
-                {name: 'Step', age: 245}
-            ]
-        });
-    }
-render() {
-    <button onClick={this.switchHandler}>Switch Name</button>
-     <Person name={this.state.persons[0].name} age={this.state.persons[0].age}> whatever </Person>
+function App() {
+    /*
+    this is the pure javascript version of the below jsx
+    const para = doument.createElement('p');
+    para.textContenet = "this is visible";
+    document.getElementBID('root').append(para);
+    */
+  return (
+    <div>
+      <h2>Let's get started!</h2>
+      <p>This is also visible</p>
+    </div>
+  );
 }
+
+export default App;
+
 ```
 
-now when state changes the persons array changes and the props changes in Person
-and will rerender
+## 32. Building a First Custom Component
 
-* remember when make function Components capitalize name of function for 
-good practice
