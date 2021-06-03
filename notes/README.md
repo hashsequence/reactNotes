@@ -799,3 +799,123 @@ function ExpenseDate(props) {
 export default ExpenseDate
 
 ```
+
+### Assignment 1: Time to Practice: React & Component Basics
+
+
+* Expenses.CSS
+
+```css
+.expenses {
+    padding: 1rem;
+    background-color: rgb(31, 31, 31);
+    margin: 2rem auto;
+    width: 50rem;
+    max-width: 95%;
+    border-radius: 12px;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
+  }
+```
+
+* Expenses.js
+```jsx
+import './Expenses.css'
+import ExpenseItem from './ExpenseItem';
+
+function Expenses(props) {
+    let expenses = props.expenses;
+    //dynamic way
+
+    return (
+        <div className="Expenses">
+            <h2>dynamic way!</h2>
+            {
+                expenses.map(item =>
+                <ExpenseItem
+                    title={item.title}
+                    amount={item.amount}
+                    date={item.date}
+                ></ExpenseItem> 
+            )
+            }
+        </div>
+    )
+    //static way
+    /*
+    return (
+        <div className="Expenses">
+            <h2>static way!</h2>
+            <ExpenseItem
+                title={expenses[0].title}
+                amount={expenses[0].amount}
+                date={expenses[0].date}
+            ></ExpenseItem>
+            <ExpenseItem
+                title={expenses[1].title}
+                amount={expenses[1].amount}
+                date={expenses[1].date}
+            ></ExpenseItem>
+            <ExpenseItem
+                title={expenses[2].title}
+                amount={expenses[2].amount}
+                date={expenses[2].date}
+            ></ExpenseItem>
+        </div>
+       )
+       */
+}
+
+export default Expenses
+```
+
+* App.js
+
+```jsx
+import Expenses from './components/Expenses';
+
+function App() {
+
+    const expenses = [
+        {
+            id: 'e1',
+            title: 'Toilet Paper',
+            amount: 94.12,
+            date: new Date(2020, 7, 14),
+        },
+        {
+            id: 'e2',
+            title: 'tissues',
+            amount: 1093.62,
+            date: new Date(2020, 9, 9),
+        },
+        {
+            id: 'e3',
+            title: 'groceries',
+            amount: 10910.62,
+            date: new Date(2020, 10, 9),
+        },
+        {
+          id: 'e4',
+          title: 'computer',
+          amount: 1500.78,
+          date: new Date(2020, 3, 9),
+        },
+    ];
+
+    return (
+      <div>
+        <h2>Let's get started! changed by avery
+        </h2>
+        <Expenses
+          expenses={expenses}
+        >
+        </Expenses>
+      </div>
+    );
+}
+
+export default App;
+```
+
+## 39. The Concept of "Composition" ("children props")
+
