@@ -921,6 +921,7 @@ export default App;
 
 
 * props.children is a reserved word
+    * The children, in React, refer to the generic box whose contents are unknown until they're passed from the parent component. What does this mean? It simply means that the component will display whatever is included in between the opening and closing tags while invoking the component.
 
 * lets make a wrapper component card:
 
@@ -1051,4 +1052,44 @@ function Expenses(props) {
 }
 
 export default Expenses
+```
+
+## 41. A Closer Look At JSX
+
+```jsx
+    return (
+        <div>
+        <h2>Let's get started! M/h2>
+        <Expenses items={expenses}/>
+        </div>
+    )
+```
+
+* In the past every component js file need a 
+```jsx
+import React from 'react'
+```
+
+* we can replace the above code with 
+```jsx
+//argumments, tag, attributes, content between opening and closing tags
+    return React.createElement('div', {}, 
+    React.createElement('h2',{}, 'Let\'s get started'),
+    React.createElement(Expenses, {items: expenses}));
+```
+
+* we need to always return one thing so thats why we have a div wrapper
+
+## 42. Organizing Component Files
+
+* we can organize components into subfolders, but we need to use relative paths eg. (../subfolder/sourceFile)
+
+## 43. An Alternative Function syntax
+
+* we can use arrow functions
+
+```js
+const App = () => {
+    //whatever the contents are
+}
 ```
