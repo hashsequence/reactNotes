@@ -827,7 +827,7 @@ function Expenses(props) {
     //dynamic way
 
     return (
-        <div className="Expenses">
+        <div className="expenses">
             <h2>dynamic way!</h2>
             {
                 expenses.map(item =>
@@ -843,7 +843,7 @@ function Expenses(props) {
     //static way
     /*
     return (
-        <div className="Expenses">
+        <div className="expenses">
             <h2>static way!</h2>
             <ExpenseItem
                 title={expenses[0].title}
@@ -919,3 +919,136 @@ export default App;
 
 ## 39. The Concept of "Composition" ("children props")
 
+
+* props.children is a reserved word
+
+* lets make a wrapper component card:
+
+* I take out some stuff from Expenses.css and put it in card.css
+
+* Card.css
+
+```css
+.card {
+    border-radius: 12px;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
+  }
+```
+
+* Card.js
+
+```jsx
+function Card(props) {
+    const classes = 'card ' + props.className
+    return <div className={classes}>{props.children}</div>
+}
+
+export default Card
+```
+
+* modify ExpenseItem.js to use Card
+```jsx
+
+import './ExpenseItem.css';
+import ExpenseDate from  './ExpenseDate';
+import Card from './Card'
+
+const RandomMoney = () => {
+    return (Math.random() * 1000).toLocaleString(
+                undefined, // leave undefined to use the visitor's browser 
+                            // locale or a string like 'en-US' to override it.
+                { minimumFractionDigits: 2 })
+}
+
+function ExpenseItem(props) {
+
+  const month = props.date.toLocaleString('en-US', { month : 'long' });
+  const day = props.date.toLocaleString('en-US', { day : '2-digit' });
+  const year = props.date.getFullYear();
+
+  const expenseTitle = props.title;
+  const expenseAmount = props.amount;
+
+return (
+  <Card className="expense-item">
+   <ExpenseDate date={props.date}></ExpenseDate>
+    <div>
+      <h2>{expenseTitle}</h2>
+       <div className="expense-item__price">First Way: ${RandomMoney()}</div>
+       <div className="expense-item__price">Second Way: ${expenseAmount}</div>
+    </div>
+  </Card>
+);
+}
+export default ExpenseItem;
+
+```
+
+* also modify Expense.js to use Card
+
+```jsx
+import './Expenses.css'
+import ExpenseItem from './ExpenseItem';
+import Card from './Card'
+function Expenses(props) {
+    let expenses = props.expenses;
+    //dynamic way
+    let output = (
+        <div className="expenses">
+            <h2>dynamic way!</h2>
+            {
+                expenses.map((item) => (
+                
+                <ExpenseItem
+                    title={item.title}
+                    amount={item.amount}
+                    date={item.date}
+                ></ExpenseItem> 
+                )
+            )
+            }
+        </div>
+    )
+
+    return (
+        <Card className="expenses">
+            <h2>dynamic way!</h2>
+            {
+                expenses.map((item) => (
+                <ExpenseItem
+                    title={item.title}
+                    amount={item.amount}
+                    date={item.date}
+                ></ExpenseItem> 
+                )
+            )
+            }
+        </Card>
+    )
+    //static way
+    /*
+    return (
+        <div className="Expenses">
+            <h2>static way!</h2>
+            <ExpenseItem
+                title={expenses[0].title}
+                amount={expenses[0].amount}
+                date={expenses[0].date}
+            ></ExpenseItem>
+            <ExpenseItem
+                title={expenses[1].title}
+                amount={expenses[1].amount}
+                date={expenses[1].date}
+            ></ExpenseItem>
+            <ExpenseItem
+                title={expenses[2].title}
+                amount={expenses[2].amount}
+                date={expenses[2].date}
+            ></ExpenseItem>
+        </div>
+       )
+       */
+}
+
+export default Expenses
+```
