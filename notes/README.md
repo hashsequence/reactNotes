@@ -1093,3 +1093,216 @@ const App = () => {
     //whatever the contents are
 }
 ```
+
+# Section 4: React State & Working With Events
+
+## 46. Listening to Events & Working with Event Handlers
+
+* button 
+
+* In this example when we click the button, we have an event handler via the clickHandler function we implement
+
+* by convention it is recommened to name handler functions with Handler suffix
+
+```jsx
+const ExpenseItem = (props) => {
+  // function clickHandler() {}
+  const [title, setTitle] = useState(props.title);
+  console.log('ExpenseItem evaluated by React');
+  
+  const clickHandler = () => {
+    setTitle('Updated!');
+    console.log(title);
+  };
+
+  return (
+    <Card className='expense-item'>
+      <ExpenseDate date={props.date} />
+      <div className='expense-item__description'>
+        <h2>{title}</h2>
+        <div className='expense-item__price'>${props.amount}</div>
+      </div>
+      <button onClick={clickHandler}>Change Title</button>
+    </Card>
+  );
+}
+```
+
+## 47. How Component Functions Are Executed
+
+* react components are only created once so we need state
+
+## 48. Working with "State"
+
+* for reevaluation at runtime we use state
+* for example if we want to change title on the button
+
+```jsx
+const [title, setTitle] = useState(props.title);
+```
+
+* the useState function takes the variable and creates a hook to title
+
+* the setTitle method can be used to change the state of title, and the component will update
+
+```jsx
+const ExpenseItem = (props) => {
+  // function clickHandler() {}
+  const [title, setTitle] = useState(props.title);
+  console.log('ExpenseItem evaluated by React');
+  
+  const clickHandler = () => {
+    setTitle('Updated!');
+    //no in this console log, the title will be the old one because reacts scheules the change to the component and is not immediate
+    console.log(title);
+  };
+
+  return (
+    <Card className='expense-item'>
+      <ExpenseDate date={props.date} />
+      <div className='expense-item__description'>
+        <h2>{title}</h2>
+        <div className='expense-item__price'>${props.amount}</div>
+      </div>
+      <button onClick={clickHandler}>Change Title</button>
+    </Card>
+  );
+}
+
+```
+
+## 49. A Closer Look at the "useState" Hook
+
+* why are we using const here
+
+```jsx
+ const [title, setTitle] = useState(props.title);
+ ```
+
+ * we are not technically reassigning it, the useState 
+ tells react that it will be handled somewhere else
+
+ ## 51. Adding Form Inputs
+
+ * lets make a NewExpense Component
+
+* NewExpense.js
+```jsx
+import React from 'react'
+
+import './NewExpense.css;
+
+const NewExpense = () => {
+  return <div className="new-expense">
+
+  </div>
+};
+
+export default NewExpense
+```
+
+* ExpenseForm.js
+
+```jsx
+import React from 'react'
+
+const ExpenseForm = () => {
+  return <form>
+    <div className='new-expense__controls'>
+      <div className='new-expense__control'>
+        <label>Title</label>
+        <input type='text' />
+      </div>
+      <div className='new-expense__control'>
+            <label>Date</label>
+            <input
+              type='date'
+              min='2019-01-01'
+              max='2022-12-31'
+            />
+        </div>
+      </div>
+      <div className='new-expense__actions'>
+        <button type='submit'>Add Expense</button>
+      </div>
+  </form>
+}
+```
+
+## 52. Listening to User Input
+
+* We need to add listeners
+* we can acesss the target.value from the input
+```jsx
+const ExpenseForm = () => {
+  const [enteredTitle, setEnteredTitle] = useState('');
+  const [enteredAmount, setEnteredAmount] = useState('');
+  const [enteredDate, setEnteredDate] = useState('');
+
+  const titleChangeHandler = (event) => {
+    setEnteredTitle(event.target.value);
+  };
+
+  const amountChangeHandler = (event) => {
+    setEnteredAmount(event.target.value);
+  };
+
+  const dateChangeHandler = (event) => {
+    setEnteredDate(event.target.value);
+  };
+
+  return (
+    <form>
+      <div className='new-expense__controls'>
+        <div className='new-expense__control'>
+          <label>Title</label>
+          <input type='text' onChange={titleChangeHandler} />
+        </div>
+        <div className='new-expense__control'>
+          <label>Amount</label>
+          <input
+            type='number'
+            min='0.01'
+            step='0.01'
+            onChange={amountChangeHandler}
+          />
+        </div>
+        <div className='new-expense__control'>
+          <label>Date</label>
+          <input
+            type='date'
+            min='2019-01-01'
+            max='2022-12-31'
+            onChange={dateChangeHandler}
+          />
+        </div>
+      </div>
+      <div className='new-expense__actions'>
+        <button type='submit'>Add Expense</button>
+      </div>
+    </form>
+  );
+};
+```
+
+## 53. Working with Multiple States
+
+```jsx
+  const [enteredTitle, setEnteredTitle] = useState('');
+  const [enteredAmount, setEnteredAmount] = useState('');
+  const [enteredDate, setEnteredDate] = useState('');
+
+  const titleChangeHandler = (event) => {
+    setEnteredTitle(event.target.value);
+  };
+
+  const amountChangeHandler = (event) => {
+    setEnteredAmount(event.target.value);
+  };
+
+  const dateChangeHandler = (event) => {
+    setEnteredDate(event.target.value);
+  };
+```
+
+## 54. Using One State Instead (And What's Better)
