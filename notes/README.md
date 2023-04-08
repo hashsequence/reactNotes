@@ -1306,3 +1306,44 @@ const ExpenseForm = () => {
 ```
 
 ## 54. Using One State Instead (And What's Better)
+
+```jsx
+
+const ExpenseForm = () => {
+  /*
+  //instead of this 
+  const [enteredTitle, setEnteredTitle] = useState('');
+  const [enteredAmount, setEnteredAmount] = useState('');
+  const [enteredDate, setEnteredDate] = useState('');
+  */
+ // we do this
+  const [userInput, setUserInput] = useState({
+    enteredTitle,
+    enteredAmount,
+    enteredDate
+  })
+}
+```
+
+* the cons of this that we when we replace an object with another one it will replace the other one so basically you need to do 
+
+```jsx
+setUserInput({
+  ...userInput,
+  //new stuff...
+});
+```
+
+## 55. Updating State that depends on previous state
+
+* basically this
+
+```jsx
+setUserInput((prev) =>{
+  return {
+  ...prev,
+  //new stuff...
+  }
+})
+
+```
