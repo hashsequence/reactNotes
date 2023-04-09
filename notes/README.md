@@ -1347,3 +1347,163 @@ setUserInput((prev) =>{
 })
 
 ```
+
+* onChange with useState example
+```jsx
+import React, {useState} from 'react';
+
+import './styles.css';
+
+// don't change the Component name "App"
+export default function App() {
+    
+    const [isValid, setIsValid] = useState({message: <p>"Invalid message"</p>});
+    
+    const validFunc = (e) => {
+        if (typeof e.target.value === 'undefined' || e.target.value.length < 3) {
+            setIsValid({
+                message: <p>"Invalid message"</p>
+            });
+        }
+        setIsValid({
+            message:  <p>"Valid message"</p>
+        });
+    }
+    
+    return (
+        <form>
+            <label>Your message</label>
+            <input type="text" onChange={validFunc}/>
+            {isValid.message}
+        </form>
+    );
+}
+```
+* onClick with useState with prev example
+```jsx
+import React, {useState} from 'react';
+
+import './styles.css';
+
+// don't change the Component name "App"
+export default function App() {
+    const [count, inc] = useState(0);
+    const increment = (e) => {
+        inc((prev) => {
+            return prev + 1;
+        });
+    }
+    return (
+      <div>
+        <p id="counter">{count}</p>
+        <button onClick={increment}></button>
+      </div>
+    );
+}
+
+```
+
+## 56 Handling Form Submission
+
+* onSubmit
+* event.preventDefault();
+  * used because onSubmit because it will automatically send a request to the server hosting the page
+
+```jsx
+
+const handleSubmit = (e) => {
+  e.preventDefault();
+  //DO STUFF....
+}
+<form onSubmit={handleSubmit}></form>
+```
+
+## 57 Handling Two-Way Binding
+
+* for inputs we just don't listen to inputs we also set inputs
+
+```jsx
+const submitHandler = (e) => {
+  e.preventDefault();
+  titleChangedHandler({
+    enteredTitle : "something"
+  })
+}
+<form onSubmit={submitHandler}>
+  <input type="text" value={enteredTitle} onChange={titleChangedHandler}></input>
+</form>
+```
+
+* now when we press submit we can submit the values and clear the inputs
+* two-way binding is useful in forms because we gather user input and then change it
+
+## 58 Child-to-Parent Component Communication (Bottom-up)
+
+```jsx
+const ChildComponent = (props) => {
+
+  const doSomething = () => {
+    props.parentSetterFunc({
+      //...something new
+    })
+  }
+  return <div></div>
+}
+const ParentComponent = () => {
+  const [parentState, setParentState] => useState({
+    //...something
+  })
+
+  return (
+    <ChildComponent parentSetterFunc={setParentState}/>
+  )
+}
+
+```
+
+## 59. Lifting The State Up
+
+* how sibling components can communicate to each other
+  * tldr: have parent pass a useState method to both child and children can communicate setting the state of parent useState
+
+```jsx
+const ChildComponent = (props) => {
+
+  const doSomething = () => {
+    props.parentSetterFunc({
+      //...something new
+    })
+  }
+  return <div></div>
+}
+const ChildComponentTwo = (props) => {
+
+  const doSomething = () => {
+    props.parentSetterFunc({
+      //...something new
+    })
+  }
+  return <div></div>
+}
+
+const ParentComponent = () => {
+   const [parentState, setParentState] => useState({
+    //...something
+  })
+
+  eturn (
+    <ChildComponent parentSetterFunc={setParentState}/>
+    <ChildComponentTwo parentState={parentState}/>
+  )
+}
+```
+
+## 60. Controlled vs Uncontrolled Components  & Stateless vs Stateful Components
+
+* Controlled Components - parent components handles states and setterStates
+
+* unControlled Components - not controlled by parent
+
+* stateful components manages state
+
+* stateless components doesn't have internal state, just there to output data
