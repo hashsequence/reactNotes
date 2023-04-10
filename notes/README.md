@@ -1507,3 +1507,99 @@ const ParentComponent = () => {
 * stateful components manages state
 
 * stateless components doesn't have internal state, just there to output data
+
+
+## 63. Rendering Lists of Data
+
+```jsx
+const Item = (props) => {
+  return <p>{props.children}</p>
+}
+
+<ListComponent items={[/*List of stuff*/]}/>
+const ListComponent = (props) => {
+  return {props.items.map((someStringSample) => {
+    <Item>{someStringSample}</Item>
+  })}
+}
+```
+
+* Rendering List of data Example:
+  * App.js
+  ```jsx
+
+  import React from 'react';
+
+  import Todo from './Todo';
+  import './styles.css';
+
+  const DUMMY_TODOS = [
+      'Learn React',
+      'Practice React',
+      'Profit!'
+  ];
+
+  // don't change the Component name "App"
+  export default function App() {
+      return (
+        //don't usually use index, because indices can remap when adding or deleting from list, have self made id's 
+          DUMMY_TODOS.map((value, index) => {
+              return <Todo key={index} text={value}></Todo>
+          })
+      );
+  }
+
+
+  ```
+  * Todo.js
+  ```jsx
+  import React from 'react';
+
+  export default function Todo(props) {
+      return <li>{props.text}</li>;
+  }
+  ```
+
+  ## 64. Using Stateful Lists
+
+  ```jsx
+
+  INIT_expenses = [/*list of expense objects*/]
+
+  const App = () => {
+    const [expense, setExpenses] = useState(INIT_expenses)
+    const addExpenseHandler = (prev) => {
+      return [expense, ...prev]
+    }
+  /*
+  Note:
+  //These two are equivalent
+    function App1() {
+      return <Greeting firstName="Ben" lastName="Hector" />;
+    }
+
+    function App2() {
+      const props = {firstName: 'Ben', lastName: 'Hector'};
+      return <Greeting {...props} />;
+    }
+  */
+    return (
+      <div>
+        {props.items.map((expenses) => {
+          <ExpenseItem
+            {...expenses}
+          />
+        })}
+      </div>
+    )
+  }
+
+  ```
+
+  ## 65. Understanding "Keys"
+
+  * React have a special concept when rendering a list of data
+  * if you don't pass key when rendering a list and add a new item to list then it will rerender the entire list instead of just rendering that new item added
+  * you can use an id of the list of objects or something like that
+  * always add key when mapping list, just to make sure you don't run against the problem listed above
+
