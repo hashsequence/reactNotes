@@ -1182,7 +1182,7 @@ const ExpenseItem = (props) => {
  * we are not technically reassigning it, the useState 
  tells react that it will be handled somewhere else
 
- ## 51. Adding Form Inputs
+## 51. Adding Form Inputs
 
  * lets make a NewExpense Component
 
@@ -1491,7 +1491,7 @@ const ParentComponent = () => {
     //...something
   })
 
-  eturn (
+  return (
     <ChildComponent parentSetterFunc={setParentState}/>
     <ChildComponentTwo parentState={parentState}/>
   )
@@ -1559,8 +1559,7 @@ const ListComponent = (props) => {
       return <li>{props.text}</li>;
   }
   ```
-
-  ## 64. Using Stateful Lists
+## 64. Using Stateful Lists
 
   ```jsx
 
@@ -1596,7 +1595,7 @@ const ListComponent = (props) => {
 
   ```
 
-  ## 65. Understanding "Keys"
+## 65. Understanding "Keys"
 
   * React have a special concept when rendering a list of data
   * if you don't pass key when rendering a list and add a new item to list then it will rerender the entire list instead of just rendering that new item added
