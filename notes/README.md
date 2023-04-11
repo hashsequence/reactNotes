@@ -1603,3 +1603,33 @@ const ListComponent = (props) => {
   * you can use an id of the list of objects or something like that
   * always add key when mapping list, just to make sure you don't run against the problem listed above
 
+## 66. Outputing Conditional Content
+
+* we can use javascript ternary expression syntax 
+```js
+condition ? a : b
+```
+
+* we can also do this 
+
+```jsx
+condition && <Component {...props}/>
+```
+* javascript will return value of last term in expression
+
+* if you don't want to inline the conditions in return, then write the logic before the return in the function component like 
+
+```jsx
+let value = "default"
+if(condition) {
+  value = "something"
+} else {
+  value = "somethingelse"
+}
+
+return (
+  <div>
+    {value}
+  </div>
+)
+```
