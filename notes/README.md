@@ -1632,3 +1632,199 @@ return (
   </div>
 )
 ```
+
+## 67 Adding Conditional Return Statements
+
+```jsx
+const  ExpenseList = (props) => {
+  if (props.items.length == 0) {
+    return <p>No expenses found.</p>
+  }
+  return (
+    <ul className='expense-list'>
+    {
+      props.items.map((expense) => {
+        <ExpenseItem
+        key={expense.id}
+        title={expense.title}
+        amount={expense.amount}
+        date={expense.date}
+        />
+      })
+    }
+    </ul>
+  )
+}
+```
+
+## 68 Adding a Chart
+* Chart.css
+```jsx
+
+```
+
+* ChartBar.css
+```jsx
+
+```
+
+* chart.js
+```jsx
+import React from 'react';
+import CharBar from './CharBar';
+import './Chart.css';
+
+const Chart = (props) => {
+  return <div className="chart">
+  {
+    props.dataPoints.map((dataPoint) => (
+      <ChartBar value={dataPoint.value} maxValue={null} label={dataPoint.label}
+    />
+    ))
+  }
+  </div>
+}
+
+export default Chart
+```
+* ChartBar.js
+```jsx
+const ChartBar = (props) => {
+
+  let barFillHeight = "0%";
+  if (props.max > 0) {
+    barfillHeight = math.round(props.value/props.maxValue * 100) + '%';
+  }
+
+  return 
+  <div className="chart-bar">
+    <div className="chart-bar__inner">
+      <div className="chart-bar__fill"></div>
+    </div>
+    <div className="chart-bar__label">></div>
+  </div>
+}
+
+export default ChartBar
+```
+
+## 69 Adding Dynamic CSS
+
+
+* ChartBar.css
+```css
+.chart-bar {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.chart-bar__inner {
+  height: 100%;
+  width: 100%;
+  border: 1px solid #313131;
+  border-radius: 12px;
+  background-color: #c3b4f3;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+```
+
+* Chart.css
+```css
+.chart {
+  padding: 1rem;
+  border-radius: 12px;
+  background-color: #f8dfff;
+  text-align: center;
+  display: flex;
+  justify-content: space-around;
+  height:10rem;
+}
+```
+
+* setting style prop of element
+  * ChartBar.js
+  ```jsx
+  const ChartBar = (props) => {
+
+    let barFillHeight = "0%";
+    if (props.max > 0) {
+      barfillHeight = math.round(props.value/props.maxValue * 100) + '%';
+    }
+
+    return 
+    <div className="chart-bar">
+      <div className="chart-bar__inner">
+        <div className="chart-bar__fill" style={{height: barFillHeight, backgroundColor: 'red'}}></div>
+      </div>
+      <div className="chart-bar__label">></div>
+    </div>
+  }
+
+  export default ChartBar
+  ```
+
+## 70 Wrap up and Next Steps
+
+```jsx
+import React from 'react';
+import Chart from './Chart';
+
+const ExpenseChart = (props) => {
+  const chartDataPoints = [
+    {label: 'Jan', value: 0},
+    {label: 'Feb', value: 0},
+    {label: 'Mar', value: 0},
+    {label: 'Apr', value: 0},
+    {label: 'May', value: 0},
+    {label: 'Jun', value: 0},
+    {label: 'Jul', value: 0},
+    {label: 'Aug', value: 0},
+    {label: 'Sep', value: 0},
+    {label: 'Oct', value: 0},
+    {label: 'Nov', value: 0},
+    {label: 'Dec', value: 0},
+  ];
+
+  for (const expense in props.expenses) {
+    const expenseMonth = expense.date.getMonth(); //starting at 0 => January 
+    chartDataPoints[expenseMonth].value += expense.amount;
+  }
+
+  return <Chart dataPoints={chartDataPoints}/>
+}
+```
+
+* to get max
+
+* chart.js
+```jsx
+import React from 'react';
+import CharBar from './CharBar';
+import './Chart.css';
+
+const Chart = (props) => {
+  const dataPointsValues = props.dataPoints,map((dataPoint) => {
+    return dataPoint.value;
+  });
+  const totaMaximum = Math.max(...dataPointValues);
+
+  return <div className="chart">
+  {
+    props.dataPoints.map((dataPoint) => (
+      <ChartBar value={dataPoint.value} maxValue={totalMaximum} label={dataPoint.label}
+    />
+    ))
+  }
+  </div>
+}
+
+export default Chart
+```
+
+# Section 6: Styling React Components
