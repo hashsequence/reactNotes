@@ -1828,3 +1828,206 @@ export default Chart
 ```
 
 # Section 6: Styling React Components
+
+## 74. Setting Dynamic Styles
+
+```jsx
+<label style={{color: someFunc()}}>TestLabel</label>
+<label style={{color: !isValid ? 'red' : 'black'}}>TestLabel</label>
+```
+
+* you can override css with inline style
+
+## 75. Setting CSS Class dynamically
+
+```css
+
+.form-control input:focus {
+  outline: none;
+  background: #fad0ec;
+  border-color: #8b005d;
+}
+
+.form-control.invalid input {
+  border-color: red;
+  background: #ffd7d7;
+}
+
+.form-control.invalid label {
+  color: red;
+}
+```
+```jsx
+
+<form onSubmit={formSubmitHandler}>
+  <div className={`form-control ${!isValid ? 'invalid' : ''}`}>
+  </div>
+</form>
+```
+
+* .classname1.classname2
+
+```html
+<div class="name1 name2">...</div>
+<style>
+.name1.name2{property:value;} /* Selects all elements with both name1 and name2 set within its class attribute */
+</style>
+```
+
+* .classname1 .classname2
+
+```html
+/* Be careful, if there is a space between them ( .classname1 .classname2 ), then CSS will select all elements with name2 that is a child of an element with name1 */
+<div class=”name1">
+ <div class=”name2">
+ …
+ </div>
+</div>
+<style>
+.name1 name2{property:value;} 
+</style>
+```
+
+## 76. Introducing Styled Components
+
+* https://styled-components.com/
+  * helps style specific components rather import entire css
+  * need to install package
+
+* example
+
+```jsx
+import React from 'react';
+import styled from 'styled-components';
+
+const Button = styled.button`
+font : inherit;
+padding: 1px solid #8b005d;
+
+.button:hover,
+.button:active {
+  bacground: #ac0e77
+}
+`; //the double backtick at the end is a tagged template literal, instead of doing style.button() we just use ``
+//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#tagged_templates
+//
+```
+
+## 77 Styled Components & Dynamic Props
+
+```jsx
+import styled from 'styled-components
+
+const FormControl = styled.div`
+margin: 0.5rem 0;
+
+& label {
+    font-weight: bold;
+}
+
+&.invalid input {
+
+}
+
+
+`
+
+//& refers to the selected component you are refering to,so instead of saying form-control.invalid input you could just do &.invalid input
+
+<FormControl className={!isValid && 'invalid'}/> //if invalid then set className to invalid
+```
+
+* you can also pass it in like a prop
+
+```jsx
+import styled from 'styled-components
+
+const FormControl = styled.div`
+margin: 0.5rem 0;
+
+& label {
+    font-weight: bold;
+}
+
+&.invalid input {
+
+}
+
+& input {
+  border: 1px solid ${props => props.invalid ? 'red' : #ccc};
+}
+
+`
+
+<FormControl invalid={!isValid}/> 
+```
+
+## 78 Styled Components & Media Queries
+
+```jsx
+
+const Button = styled.button`
+width: 100%
+font: inherit;
+padding: 1px solid #8b005d;
+
+@media(min-width: 768px) {
+  width: auto;
+}
+`
+```
+
+* https://www.w3schools.com/css/css3_mediaqueries.asp
+
+* Media Query Syntax
+A media query consists of a media type and can contain one or more expressions, which resolve to either true or false.
+
+```
+@media not|only mediatype and (expressions) {
+  CSS-Code;
+}
+```
+
+## 79 Using CSS Modules
+
+
+* https://create-react-app.dev/docs/adding-a-css-modules-stylesheet/
+
+* Button.module.css
+```
+.error {
+  background-color: red;
+}
+```
+* Button.js
+```jsx
+import styles from './Button.module.css';
+
+function Button(props) {
+  return (
+    // reference as a js object
+    return <button className={styles.error}>Error Button</button>;
+  )
+}
+
+```
+
+
+## 80.Dynamic Styles with CSS Modules
+
+* Button.module.css
+```
+@media(min-width: 768px) {
+  width: auto;
+}
+```
+
+```jsx
+
+import styles from './FormControl.module.css';
+import styles from './Button.module.css';
+
+<div className={`${styles['form-control']} ${!invalid && styles.invalid}`}> </div>
+
+<button className={styles.button}></button>
+```
