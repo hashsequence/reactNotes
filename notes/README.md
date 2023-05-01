@@ -2031,3 +2031,14 @@ import styles from './Button.module.css';
 
 <button className={styles.button}></button>
 ```
+
+# Section 7: Debugging React Apps
+
+## 85 Working with Breakpoints
+
+* chrome --> right click inspect --> go to sources --> add break point to js file (should be in normal src folder if running on dev)
+
+## 86. Using the React Dev Tools
+
+* https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en
+
