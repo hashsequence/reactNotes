@@ -2042,3 +2042,102 @@ import styles from './Button.module.css';
 
 * https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en
 
+## 100 JSX Limitations and Workarounds
+
+* we can't do this because we cant have more than one root jsx element
+
+```jsx
+return (
+  <h2></h2>
+  <p></p>
+);
+```
+
+* you can solve this by wrapping it into a div
+
+* you could also use array
+
+```jsx
+return (
+  [
+     <h2></h2>,
+     <p></p>
+  ]
+)
+```
+
+* however you will get a warning because you need a key in each item in list or array
+
+## 101 wrapper components
+
+```jsx
+const Wrappers  props => {
+  return props.children
+}
+
+export default Wrappers
+```
+
+## 102 React Fragments
+
+* we don't actually need wrapper components, we can just use React.Fragment
+
+```jsx
+return (
+  <React.Fragment>
+    <h2></h2>
+    <p></p>
+  </React.Fragment>
+)
+```
+
+or 
+
+```jsx
+import React, {Fragment} from 'react';
+return (
+  <Fragment>
+    <h2></h2>
+    <p></p>
+  </Fragment>
+)
+```
+
+## 104 React Portals
+
+ * Portals provide a first-class way to render children into a DOM node that exists outside the DOM hierarchy of the parent component.
+
+in index.html
+
+```html
+
+<div id="backdrop-root"></div>
+<div id="modalOverlay-root"></div>
+<div id="root"></div>
+```
+
+```jsx
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+const Backdrop = (props) => {
+  return <div className={classes.backdrop} onClick={props.onConfirm}>
+}
+
+const ModalOverlay = (props) => {
+  //....content
+}
+
+const ErrorModal = (props) => {
+  return (
+    <React.Fragment>
+      {
+        ReactDom.creatPortal(document.getElementById('backrop-root'), <Backdrop onClick={props.onConfirm}/>)}
+      {
+         ReactDom.creatPortal(document.getElementById('modalOverlay-root'), <ModalOverlay />)
+      }
+    </React.Fragment>
+  )
+}
+```
+
