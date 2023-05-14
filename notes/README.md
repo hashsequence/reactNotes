@@ -2042,6 +2042,8 @@ import styles from './Button.module.css';
 
 * https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en
 
+# Fragments, portals, and refs
+
 ## 100 JSX Limitations and Workarounds
 
 * we can't do this because we cant have more than one root jsx element
@@ -2140,4 +2142,37 @@ const ErrorModal = (props) => {
   )
 }
 ```
+
+## 105 working with refs
+
+* allow access to dom elements and work with them
+
+* sets up a connection with dom to react code
+
+```jsx
+import React, {useRef} from 'react'
+
+const AddUser = (props) => {
+  const nameInputRef useRef();
+
+  <input ref={nameInputRef}>
+
+  </input>
+
+}
+
+//access ref current like this, which will be the actual dom node
+nameInputRef.current
+
+```
+
+* if you use refs then we don't need value or onchange because we are getting rid of the state, setState based style, you can just modify current.value manually
+
+## 106 controlled vs uncontrolled components
+
+* uncontrolled compnents are tagelements that are not controlled by react, so example if you use refs then it is uncontrolled, because we are basically using DOM api
+
+* normal way of using state and setState where it is controlled by react is controlled
+
+# Handling side effects, using reducers, using the context api
 
