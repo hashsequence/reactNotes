@@ -2176,3 +2176,70 @@ nameInputRef.current
 
 # Handling side effects, using reducers, using the context api
 
+## 109 What are side effects
+
+* side effects are anything that is anything else not relating to rendering ui & react to user input
+
+* examples of side effects:
+  * store data in browser storage
+  * http requests
+  * set and managing timers
+
+* useEffect hook
+  * builtin hook that will do something special
+
+  ```
+  useEffect(() => {}, [dependency])
+
+  function only runs if dependency are effected or change
+  ```
+
+## 110 using the useEffect() hook
+
+* you can use localStorage, to store info between browser sessions
+* local storage never expires and survives even after browser restarts
+* you have to manually clear browser history and data
+```js
+localStorage.setItem('key','value');
+localStorage.getItem('key');
+```
+
+* you can use useEffect to control when things run
+
+* you can combine useEffect to check localStorage and perform whatever operations you want
+
+```jsx
+useEffect(() => {
+  const someValFromLocalStorage = localStorage.getItem('key');
+
+  ///do something with someValFromLocalStorage
+},[])
+
+```
+
+* if dependecy array is empty than it runs once for every initial render
+
+* React.StrictMode will make component render twice so it might explains why useEffect runs twice with empty dependency array
+
+## 111 useEffect & dependencies
+
+* add dependency with conjunction with useState to dependency array to run useEffect everytime state changes
+
+```jsx
+const [s, setS] = useState({"key":"value1"});
+
+useEffect(() => {
+
+},[s])
+```
+
+## using the useEffect cleanup function
+
+```jsx
+
+useEffect(() => {
+
+  return () => {}
+},[/*dependencies*/])
+```
+* if it runs again then the cleanup function runs before every useEffect sideEffect functions beside the first time.
